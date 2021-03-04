@@ -1,0 +1,29 @@
+<div class="alert alert-danger" role="alert" *ngIf='errorMsg'>
+    {{errorMsg}}
+</div>	
+<div class="form-signin">
+    
+    <div class="loginheader">
+        <img src="assets/img/icons8-login-as-user-96.png" alt="" width="82" height="82">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    </div>
+    
+   
+    <div class="form-group">
+        <input name="username" type="text" id="username" class="form-control" placeholder="Username" required="" autofocus=""  [(ngModel)] = "credencial.username">
+    </div>
+    
+    <div class="form-group">
+        <input type="password" id="password" class="form-control" placeholder="Password" required=""  [(ngModel)] = "credencial.password">
+    </div>
+    
+    
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <pre>{{ isAuth }}</pre>
+    <button (click) = gestAuth() class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">© 2017-2018</p>    
+</div>
