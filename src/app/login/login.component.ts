@@ -1,6 +1,8 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthappService } from '../services/authapp.service';
+import { MessageService } from '../services/message.service';
+import { AuthappService } from '../services/auth/authapp.service';
 
 export class Credencial{
   constructor(
@@ -23,12 +25,10 @@ export class ApiMsg{
 })
 export class LoginComponent implements OnInit {
   
-  
-  errorMsg="";
   isAuth=this.auth.isLogged();
   credencial= new Credencial('','');
 
-  constructor(private route: Router,private auth: AuthappService) { }
+  constructor(private route: Router,private auth: AuthappService,private msgService:MessageService) { }
 
   ngOnInit(): void {
   }
@@ -38,10 +38,15 @@ export class LoginComponent implements OnInit {
       response => {
         
         sessionStorage.setItem("Utente", this.credencial.username);
-        this.route.navigate(['home']);
+        if(response.headers.get("X-Auth")!==null){
+          sessionStorage.setItem("access_token", response.headers.get("X-Auth")!);
+          console.log(sessionStorage.getItem("access_token"));
+        }
+        window.location.href = "http://localhost:4200/home";
       },
       error => {
-        this.errorMsg=error.error;
+        this.msgService.clear();
+        this.msgService.addError(error.error);
       }
     )  
   }

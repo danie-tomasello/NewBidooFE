@@ -1,36 +1,43 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { NewbidooComponent } from './newbidoo/newbidoo.component';
-import { ErrorComponent } from './error/error.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AsteComponent } from './aste/aste.component';
-import { LogoutComponent } from './logout/logout.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
+import { RegistrationComponent } from './registration/registration.component';
+import { VerifyComponent } from './verify/verify.component';
+import { NotificheComponent } from './notifiche/notifiche.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NotificheComponent,
     LoginComponent,
-    NewbidooComponent,
-    ErrorComponent,
     HeaderComponent,
     FooterComponent,
     AsteComponent,
-    LogoutComponent
+    RegistrationComponent,
+    VerifyComponent,
+    NotificheComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthappService } from '../services/authapp.service';
+import { Router } from '@angular/router';
+import { RegistrationComponent } from '../registration/registration.component';
+import { AuthappService } from '../services/auth/authapp.service';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +12,24 @@ export class HeaderComponent implements OnInit {
 
   isAuth=this.auth.isLogged();
   userLogged=this.auth.loggedUser();
-  constructor(private auth: AuthappService) { }
+  constructor(private route: Router, private auth: AuthappService) { }
 
   ngOnInit(): void {
+    
   }
+
+  logout(){
+    this.auth.logout().subscribe(
+      response => {
+        this.auth.clearAll();
+        window.location.reload();
+      },
+      error => {
+        console.log(error.error)
+      }
+    )
+  }
+
+ 
 
 }

@@ -9,4 +9,6 @@ export class AppComponent {
   title = 'newbidoo';
   saluti = 'Benvenuti nel sito newbidoo';
   titolo2 = 'Seleziona gli articoli';
+
+  
 }

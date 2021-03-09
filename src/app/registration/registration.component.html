@@ -1,0 +1,122 @@
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registrationModal">
+    Registrati
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registrationModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="card bg-light">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">Create Account</h4>
+                    <p class="text-center">Get started with your free account</p>
+                    <p>
+                        <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
+                        <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>
+                    </p>
+                    <p class="divider-text">
+                        <span class="bg-light">OR</span>
+                    </p>
+                    <form class="form-registration" [formGroup]="userForm" (ngSubmit)="registration()" >
+                        
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input class="form-control" placeholder="Username" type="text" formControlName="username" >
+                        </div> 
+                        <div *ngIf="username && username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                            <div *ngIf="username.invalid">
+                            Devi inserire un nome utente valido.
+                          </div>
+                        </div>
+                        <!-- form-group// -->
+                        
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            </div>
+                            <input class="form-control" placeholder="Email address" type="email" formControlName="email">
+                        </div>
+                        <div *ngIf="email && email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                            <div *ngIf="email.invalid">
+                            Devi inserire una e-mail valida.
+                          </div>
+                        </div> <!-- form-group// -->
+                        
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                            </div>
+                            <select class="custom-select" style="max-width: 120px;" formControlName="prefix">
+                                <option selected="">+39</option>
+                                <option value="1">+972</option>
+                                <option value="2">+198</option>
+                                <option value="3">+701</option>
+                            </select>
+                            <input class="form-control" placeholder="Phone number" type="text" formControlName="phoneNumber">
+                        </div> 
+                        <div *ngIf="phoneNumber && phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert alert-danger">
+                            <div *ngIf="phoneNumber.invalid">
+                            Devi inserire un numero di telefono valido.
+                          </div>
+                        </div>
+                        <!-- form-group// -->
+                    
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input class="form-control" placeholder="Create password" type="password" formControlName="password">
+                        </div> <!-- form-group// -->
+                        
+                        
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+                            <input class="form-control" placeholder="Repeat password" type="password" formControlName="confirmPassword">
+                        </div> 
+                        <div *ngIf="confirmPassword && (confirmPassword.invalid || userForm.errors?.notSame ) && (confirmPassword.dirty || confirmPassword.touched)" class="alert alert-danger">
+                            <div *ngIf="confirmPassword.invalid">
+                            La password deve contenere almeno 4 caratteri.
+                            </div>
+                            <div *ngIf="userForm.errors?.notSame">
+                                Le password non corrispondono
+                            </div>
+                        </div><!-- form-group// -->                                      
+                       
+                        
+                        <div class="form-group text-center">
+                            <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary btn-block"> Create Account  </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div> <!--button-form-group// -->      
+                        
+                        
+                        <p class="text-center">Have an account? <a href="/login">Log In</a> </p>                                                                 
+                    </form>
+                </article>
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>
+                {{errorMsg}}
+            </div>
+            <div class="alert alert-success" role="alert" *ngIf='successMsg'>
+                {{successMsg}}
+            </div>      <!-- card.// -->
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+

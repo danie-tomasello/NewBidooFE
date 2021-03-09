@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { AuthappService } from './authapp.service';
+import { AuthappService } from './auth/authapp.service';
 
 @Injectable({
   providedIn: 'root'

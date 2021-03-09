@@ -1,8 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="/"><img src="favicon.ico" width="30" height="30" alt=""></a>
   
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -10,31 +11,47 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <ng-container *ngIf="isAuth">
-            <li class="nav-item dropdown">
-                <a text ="{{ userLogged }}" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Logout</a></li>
-                </ul>
-            </li> 
+          <li class="nav-item dropdown">
+            <a text ="{{ userLogged }}" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a role="button" class="dropdown-item" (click)= logout()>Logout</a>
+            </div>
+          </li>
           </ng-container>  
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <a class="nav-link" href="#">Link1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link2</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      
+      <ng-container *ngIf="isAuth; else buy">
+        <button id="buy" class="btn btn-primary">Acquista puntate</button>	 
+      </ng-container>
+      <ng-template #buy>
+        <div class="loginButton">
+          <a class="btn btn-primary" href="/login" type="button">Login</a>
+        </div>	
+        <div>	 
+          <app-registration></app-registration>
+        </div>
+       </ng-template>
     </div>
   </nav>
+  
+  
+      
+        
+  
   
   
 
