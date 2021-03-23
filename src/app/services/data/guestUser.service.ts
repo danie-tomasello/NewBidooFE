@@ -21,13 +21,13 @@ export class GuestUserService {
 
   postRegistration(user: User) {
     
-    return this.httpClient.post<ApiMsg>(`http://${server}:${port}/api/guestUser/userservice/registration`, user); //ALT + 0096 | ALT GR + '
+    return this.httpClient.post<ApiMsg>(`http://${server}:${port}/api/registration/service/emailsend`, user); //ALT + 0096 | ALT GR + '
 
   }
 
-  verify(cod: string) {
+  verify(cod: string,username: string) {
     
-    return this.httpClient.get<ApiMsg>(`http://${server}:${port}/api/guestUser/userservice/verify/${cod}`); //ALT + 0096 | ALT GR + '
+    return this.httpClient.get<ApiMsg>(`http://${server}:${port}/api/registration/service/verify?username=${username}&code=${cod}`); //ALT + 0096 | ALT GR + '
 
   }
 

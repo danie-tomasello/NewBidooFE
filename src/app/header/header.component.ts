@@ -21,11 +21,12 @@ export class HeaderComponent implements OnInit {
   logout(){
     this.auth.logout().subscribe(
       response => {
-        this.auth.clearAll();
+        console.log("success logout");
         window.location.reload();
       },
       error => {
-        console.log(error.error)
+        console.log("error logout");
+        console.log(error)
       }
     )
   }

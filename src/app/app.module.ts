@@ -13,6 +13,7 @@ import { AuthInterceptorService } from './services/auth/auth-interceptor.service
 import { RegistrationComponent } from './registration/registration.component';
 import { VerifyComponent } from './verify/verify.component';
 import { NotificheComponent } from './notifiche/notifiche.component';
+import { GuestUserComponent } from './guest-user/guest-user.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NotificheComponent } from './notifiche/notifiche.component';
     AsteComponent,
     RegistrationComponent,
     VerifyComponent,
-    NotificheComponent
+    NotificheComponent,
+    GuestUserComponent
   ],
   imports: [
     BrowserModule,

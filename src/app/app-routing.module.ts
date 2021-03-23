@@ -10,7 +10,7 @@ const routes: Routes = [
   {path:'', component : AsteComponent},
   {path:'home', component : AsteComponent},
   {path:'admin',component : AsteComponent,canActivate:[RouteguardService]},
-  {path:'verify/:cod',component : VerifyComponent}
+  {path:'verify',component : VerifyComponent}
 ];
 
 @NgModule({
