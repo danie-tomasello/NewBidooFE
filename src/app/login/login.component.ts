@@ -11,12 +11,6 @@ export class Credencial{
   ){}
 }
 
-export class ApiMsg{
-  constructor(
-    public code: string,
-    public message: string
-  ){}
-}
 
 @Component({
   selector: 'app-login',
@@ -36,17 +30,12 @@ export class LoginComponent implements OnInit {
   gestAuth(){    
     this.auth.signin(this.credencial).subscribe(
       response => {
-        
-        sessionStorage.setItem("Utente", this.credencial.username);
-        if(response.headers.get("X-Auth")!==null){
-          sessionStorage.setItem("access_token", response.headers.get("X-Auth")!);
-          console.log(sessionStorage.getItem("access_token"));
-        }
+        console.log("success login components")
         window.location.href = "http://localhost:4200/home";
       },
       error => {
         this.msgService.clear();
-        this.msgService.addError(error.error);
+        this.msgService.addError(error.error.cause);
       }
     )  
   }
