@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Credencial } from '../../login/login.component';
-import { port, server } from 'src/app/app.constants';
+import { port, server,accToken, refToken, userLog } from 'src/app/app.constants';
 import { catchError, mapTo, tap } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
+import {  throwError } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Ruoli } from 'src/models/Ruoli';
 
-export class User{
-  constructor(
-    public username: string,
-    public authorities: string[]
-  ){}
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,64 +21,72 @@ export class AuthappService {
   
   loggedUser = () => {
 
-      return localStorage.getItem("Utente");
-  }
-
-  storageToken( token: string | null, refreshToken: string | null): void {
-    if(token!==null&&refreshToken!==null){      
-      localStorage.setItem("access_token", token);
-      localStorage.setItem("refresh_token", refreshToken);
-    }
-  }
-
-  doLogUser(user:User | null, token: string | null, refreshToken: string | null){
-    if(user!==null){
-      localStorage.setItem("Utente", user.username);
-      
-      if(user.authorities.includes("ROLE_USER")){
-        localStorage.setItem("Role", "ROLE_USER");
-      }
-      if(user.authorities.includes("ROLE_ADMIN")){
-        localStorage.setItem("Role", "ROLE_ADMIN");
-      }
-    }
-    
-
-    this.storageToken(token,refreshToken);
+      return localStorage.getItem(userLog);
   }
 
   isLogged = () => {
-    let islog=(localStorage.getItem("Utente") !== null && localStorage.getItem("access_token")!==null) ? true : false;
+    let islog=(localStorage.getItem(userLog) !== null && localStorage.getItem(accToken)!==null) ? true : false;
     if(islog===false){
       this.clearAll();
     }
     return islog;
   }
 
+  isAdmin = () => {
+    if(this.isLogged()){
+    
+      let acctoken = this.getAuthToken()
+      let token = acctoken===null?undefined:acctoken;
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(token);
+      let rolesToken: string[] = decodedToken["roles"];
+      
+      return rolesToken.includes(Ruoli.admin);
+    }
+    return false;
+  }
+
+
+
+  doLogUser(username:string , token: string | null, refreshToken: string | null){
+    if(username!==null){
+      localStorage.setItem(userLog,username);
+    }
+    
+
+    this.storageToken(token,refreshToken);
+  }
+
+  storageToken( token: string | null, refreshToken: string | null): void {
+    if(token!==null&&refreshToken!==null){      
+      localStorage.setItem(accToken, token);
+      localStorage.setItem(refToken, refreshToken);
+    }
+  }
 
   clearAll = () => {
-    localStorage.removeItem("Utente");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    localStorage.removeItem(userLog);
+    localStorage.removeItem(accToken);
+    localStorage.removeItem(refToken);
 };
 
-getAuthToken() { 
-    return localStorage.getItem("access_token");
+getAuthToken(){ 
+    return localStorage.getItem(accToken);
 }
 getRefreshToken() {
-    return localStorage.getItem("refresh_token");
+    return localStorage.getItem(refToken);
 }
 
   signin(credencial: Credencial) {
     
-    return this.httpClient.post<User>(`http://${server}:${port}/api/auth/signin`, credencial,{ observe: 'response'}).pipe(
+    return this.httpClient.post(`http://${server}:${port}/api/auth/signin`, credencial,{ observe: 'response'}).pipe(
       tap(res => {
-        this.doLogUser(res.body, res.headers.get("X-Auth"),res.headers.get("X-Refresh"));
+        this.doLogUser(credencial.username, res.headers.get("X-Auth"),res.headers.get("X-Refresh"));
         console.log("success signin")
       }),
       mapTo(true),
       catchError(error => {
-        console.log("error signin")
+        console.log("error signin");
         return throwError(error);
         
       })); //ALT + 0096 | ALT GR + '; //ALT + 0096 | ALT GR + '

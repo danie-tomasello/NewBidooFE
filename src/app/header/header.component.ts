@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   isAuth=this.auth.isLogged();
   userLogged=this.auth.loggedUser();
+  isAdmin=this.auth.isAdmin();
   constructor(private route: Router, private auth: AuthappService) { }
 
   ngOnInit(): void {

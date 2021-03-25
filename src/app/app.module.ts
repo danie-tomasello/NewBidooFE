@@ -11,9 +11,10 @@ import { AsteComponent } from './aste/aste.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 import { RegistrationComponent } from './registration/registration.component';
-import { VerifyComponent } from './verify/verify.component';
+import { VerifyComponent } from './registration/verify/verify.component';
 import { NotificheComponent } from './notifiche/notifiche.component';
-import { GuestUserComponent } from './guest-user/guest-user.component';
+import { AdminComponent } from './admin/admin.component';
+import { GuestuserComponent } from './admin/guestuser/guestuser.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { GuestUserComponent } from './guest-user/guest-user.component';
     RegistrationComponent,
     VerifyComponent,
     NotificheComponent,
-    GuestUserComponent
+    AdminComponent,
+    GuestuserComponent
   ],
   imports: [
     BrowserModule,

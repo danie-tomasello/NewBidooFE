@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from '../services/message.service';
-import { GuestUserService } from '../services/data/guestUser.service';
-import { stringify } from '@angular/compiler/src/util';
+import { RegistrationService } from '../../services/data/registration/registration.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-verify',
@@ -11,12 +10,12 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class VerifyComponent implements OnInit {
 
-  constructor(private userService: GuestUserService, private router : Router, private route:ActivatedRoute, private msgService:MessageService) { }
+  constructor(private regService: RegistrationService, private router : Router, private route:ActivatedRoute, private msgService:MessageService) { }
 
   ngOnInit(): void {
     
     this.route.queryParams.subscribe(params => {
-      this.userService.verify(params['code'],params['username']).subscribe(
+      this.regService.verify(params['code'],params['username']).subscribe(
         response => {
           console.log(response.msg+" success");
           this.msgService.addSuccess(response.msg);
