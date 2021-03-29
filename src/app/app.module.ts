@@ -15,6 +15,8 @@ import { VerifyComponent } from './registration/verify/verify.component';
 import { NotificheComponent } from './notifiche/notifiche.component';
 import { AdminComponent } from './admin/admin.component';
 import { GuestuserComponent } from './admin/guestuser/guestuser.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SortableDirective } from './services/data/user/sortable.directive';
 
 @NgModule({
   declarations: [
@@ -28,14 +30,16 @@ import { GuestuserComponent } from './admin/guestuser/guestuser.component';
     VerifyComponent,
     NotificheComponent,
     AdminComponent,
-    GuestuserComponent
+    GuestuserComponent,
+    SortableDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     {

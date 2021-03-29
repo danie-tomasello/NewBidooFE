@@ -1,0 +1,9 @@
+.container-fluid{
+    width: 80%;
+}
+.pad{
+    padding-top: 80px;
+}
+.bi-caret-down{
+    color:rgba(85, 84, 84, 0.644);
+}
