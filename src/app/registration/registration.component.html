@@ -10,7 +10,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="registrationModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="registrationModalLabel">Registrazione utente</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -18,20 +18,20 @@
         <div class="modal-body">
             <div class="card bg-light">
                 <article class="card-body mx-auto" style="max-width: 400px;">
-                    <h4 class="card-title mt-3 text-center">Create Account</h4>
-                    <p class="text-center">Get started with your free account</p>
+                    <h4 class="card-title mt-3 text-center">Iscriviti gratis!</h4>
+                    <p class="text-center">Inizia con il tuo account gratuito</p>
                     <p>
-                        <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
-                        <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>
+                        <a href="" class="btn btn-block btn-twitter"> <i class="bi bi-twitter"></i>   Login via Twitter</a>
+                        <a href="" class="btn btn-block btn-facebook"> <i class="bi bi-facebook"></i>   Login via facebook</a>
                     </p>
                     <p class="divider-text">
-                        <span class="bg-light">OR</span>
+                        <span class="bg-light">oppure</span>
                     </p>
                     <form class="form-registration" [formGroup]="userForm" (ngSubmit)="registration()" >
                         
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                <span class="input-group-text"> <i class="bi bi-person-check"></i> </span>
                             </div>
                             <input class="form-control" placeholder="Username" type="text" formControlName="username" >
                         </div> 
@@ -44,7 +44,7 @@
                         
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                                <span class="input-group-text"> <i class="bi bi-envelope"></i> </span>
                             </div>
                             <input class="form-control" placeholder="Email address" type="email" formControlName="email">
                         </div>
@@ -56,7 +56,7 @@
                         
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                                <span class="input-group-text"> <i class="bi bi-phone"></i> </span>
                             </div>
                             <select class="custom-select" style="max-width: 120px;" formControlName="prefix">
                                 <option selected="">+39</option>
@@ -75,7 +75,7 @@
                     
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                <span class="input-group-text"> <i class="bi bi-lock"></i> </span>
                             </div>
                             <input class="form-control" placeholder="Create password" type="password" formControlName="password">
                         </div> <!-- form-group// -->
@@ -83,7 +83,7 @@
                         
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                <span class="input-group-text"> <i class="bi bi-lock"></i> </span>
                             </div>
                             <input class="form-control" placeholder="Repeat password" type="password" formControlName="confirmPassword">
                         </div> 
@@ -99,11 +99,10 @@
                         
                         <div class="form-group text-center">
                             <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary btn-block"> Create Account  </button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div> <!--button-form-group// -->      
                         
                         
-                        <p class="text-center">Have an account? <a href="/login">Log In</a> </p>                                                                 
+                        <p class="text-center">Hai già un account? <a href="/login">Log In</a> </p>                                                                 
                     </form>
                 </article>
             </div>

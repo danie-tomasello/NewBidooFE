@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GuestUserService } from '../services/data/guestUser.service';
+import { RegistrationService } from '../services/data/registration/registration.service';
 import { MessageService } from '../services/message.service';
 
 
@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit {
   user = new User("","","","");
   userForm!: FormGroup;
 
-  constructor(private userService: GuestUserService, private router : Router, private msgService:MessageService) { }
+  constructor(private regService: RegistrationService, private router : Router, private msgService:MessageService) { }
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
@@ -79,7 +79,7 @@ export class RegistrationComponent implements OnInit {
         this.password?.value
       );
       
-      this.userService.postRegistration(this.user).subscribe(
+      this.regService.postRegistration(this.user).subscribe(
         response => {
           this.successMsg=response.msg; 
         },

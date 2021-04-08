@@ -14,7 +14,7 @@ export class ApiMsg{
 @Injectable({
   providedIn: 'root'
 })
-export class GuestUserService {
+export class RegistrationService {
 
   constructor(private httpClient:HttpClient) { }
 
