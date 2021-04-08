@@ -1,13 +1,14 @@
 import { DecimalPipe } from '@angular/common';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable, PipeTransform } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-import { COUNTRIES } from 'src/models/Countries';
-import { Country } from 'src/models/Country';
+import { Utente } from 'src/models/Utente';
 import { SortColumn, SortDirection } from './sortable.directive';
+import { UserService } from './user.service';
 
 interface SearchResult {
-  countries: Country[];
+  users: Utente[];
   total: number;
 }
 
@@ -19,24 +20,29 @@ interface State {
   sortDirection: SortDirection;
 }
 
+
+
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-function sort(countries: Country[], column: SortColumn, direction: string): Country[] {
+function sort(users: Utente[], column: SortColumn, direction: string): Utente[] {
   if (direction === '' || column === '') {
-    return countries;
+    return users;
   } else {
-    return [...countries].sort((a, b) => {
+    return [...users].sort((a, b) => {
       const res = compare(a[column], b[column]);
       return direction === 'asc' ? res : -res;
     });
   }
 }
 
-function matches(country: Country, term: string, pipe: PipeTransform) {
-  return country.name.toLowerCase().includes(term.toLowerCase())
-    || pipe.transform(country.area).includes(term)
-    || pipe.transform(country.population).includes(term);
+function matches(user: Utente, term: string, pipe: PipeTransform) {
+  return pipe.transform(user.id).includes(term) 
+    || user.username.toLowerCase().includes(term.toLowerCase())
+    || user.email.toLowerCase().includes(term.toLowerCase())
+    || user.phoneNumber.toLowerCase().includes(term.toLowerCase());
 }
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +50,10 @@ function matches(country: Country, term: string, pipe: PipeTransform) {
 export class UtilityService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _countries$ = new BehaviorSubject<Country[]>([]);
+  private _users$ = new BehaviorSubject<Utente[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
+
+  USERS: Utente[] = [];
 
   private _state: State = {
     page: 1,
@@ -55,7 +63,16 @@ export class UtilityService {
     sortDirection: ''
   };
 
-  constructor(private pipe: DecimalPipe) {
+  constructor(private pipe: DecimalPipe, private userService: UserService) {
+    this.userService.search("").subscribe(
+      response => {
+        console.log(response);
+        this.USERS= response;
+      },
+      error => {
+        console.log(error.error.cause);
+      })
+
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
@@ -63,14 +80,14 @@ export class UtilityService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
-      this._countries$.next(result.countries);
+      this._users$.next(result.users);
       this._total$.next(result.total);
     });
 
     this._search$.next();
   }
 
-  get countries$() { return this._countries$.asObservable(); }
+  get users$() { return this._users$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
@@ -92,14 +109,14 @@ export class UtilityService {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
 
     // 1. sort
-    let countries = sort(COUNTRIES, sortColumn, sortDirection);
+    let users = sort(this.USERS, sortColumn, sortDirection);
 
     // 2. filter
-    countries = countries.filter(country => matches(country, searchTerm, this.pipe));
-    const total = countries.length;
+    users = users.filter(user => matches(user, searchTerm, this.pipe));
+    const total = users.length;
 
     // 3. paginate
-    countries = countries.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({countries, total});
+    users = users.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    return of({users, total});
   }
 }

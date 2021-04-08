@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { port, server } from 'src/app/app.constants';
 import { User } from 'src/models/User';
+import { Utente } from 'src/models/Utente';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +13,25 @@ export class UserService {
 
   save(user: User) {
     
-    return this.httpClient.post(`http://${server}:${port}/api/guestUser/service/save`, user); //ALT + 0096 | ALT GR + '
+    return this.httpClient.post(`http://${server}:${port}/api/user/service/save`, user); //ALT + 0096 | ALT GR + '
 
   }
 
   update(user: User) {
     
-    return this.httpClient.post(`http://${server}:${port}/api/guestUser/service/update`, user); //ALT + 0096 | ALT GR + '
+    return this.httpClient.post(`http://${server}:${port}/api/user/service/update`, user); //ALT + 0096 | ALT GR + '
 
   }
 
   delete(id: number) {
     
-    return this.httpClient.delete(`http://${server}:${port}/api/guestUser/service/delete/`+id); //ALT + 0096 | ALT GR + '
+    return this.httpClient.delete(`http://${server}:${port}/api/user/service/delete/`+id); //ALT + 0096 | ALT GR + '
 
   }
 
-  search(username: string) {
+  search(username: string ) {
     
-    return this.httpClient.get(`http://${server}:${port}/api/guestUser/search/`+username ); 
+    return this.httpClient.get<Utente[]>(`http://${server}:${port}/api/user/search/`+username ); 
 
   }
 }
